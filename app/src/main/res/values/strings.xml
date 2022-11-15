@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Connect 3</string>
+    <string name="app_name">Tic Tac Toe</string>
     <string name="header">TIC TAC TOE</string>
     <string name="play_again">Play Again</string>
     <string name="o_s_turn">O\'s Turn</string>

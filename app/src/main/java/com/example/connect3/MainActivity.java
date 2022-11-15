@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     //  Player X: 1
     int active_player = 0;
 
+    int counter = 0;
+
     // Possible winning positions
     int[][] winning_pos = {
             {0, 1, 2},
@@ -52,6 +54,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        btn0 = findViewById(R.id.btn0);
+        btn1 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
+        btn3 = findViewById(R.id.btn3);
+        btn4 = findViewById(R.id.btn4);
+        btn5 = findViewById(R.id.btn5);
+        btn6 = findViewById(R.id.btn6);
+        btn7 = findViewById(R.id.btn7);
+        btn8 = findViewById(R.id.btn8);
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -79,27 +92,68 @@ public class MainActivity extends AppCompatActivity {
                     filled_pos[clickedTag] = 1;
                 }
 
+                counter ++;
+
             }
         }
 
         // Check for the winner
-        checkForWinner();
+        checkForWinner(counter);
+
+
+
+        if(game_over){
+            play_again = findViewById(R.id.play_again);
+            play_again.setVisibility(View.VISIBLE);
+        }
 
     }
 
-    private void checkForWinner() {
-        for(int[] pos: winning_pos){
-            int val1 = pos[0];
-            int val2 = pos[1];
-            int val3 = pos[2];
+    private void checkForWinner(int counter) {
+        if(counter < 9){
+            for (int[] pos : winning_pos) {
+                int val1 = pos[0];
+                int val2 = pos[1];
+                int val3 = pos[2];
 
-            if(filled_pos[val1] == filled_pos[val2] && filled_pos[val2] == filled_pos[val3] &&
-                    filled_pos[val1] != -1){
-                show_winner.setText(filled_pos[val1] == 0 ? "O is the winner!!" : "X is the winner");
-                game_over = true;
+                if (filled_pos[val1] == filled_pos[val2] && filled_pos[val2] == filled_pos[val3] &&
+                        filled_pos[val1] != -1) {
+                    show_winner.setText(filled_pos[val1] == 0 ? "O is the winner!!" : "X is the winner");
+                    game_over = true;
+                }
+
             }
-
+        } else{
+            show_winner.setText("Match Tied");
+            game_over = true;
         }
+    }
+
+    public void playAgain(View view){
+
+        // Setting everything to default
+        btn0.setText("");
+        btn1.setText("");
+        btn2.setText("");
+        btn3.setText("");
+        btn4.setText("");
+        btn5.setText("");
+        btn6.setText("");
+        btn7.setText("");
+        btn8.setText("");
+
+        active_player = 0;
+        filled_pos = new int[]{-1, -1, -1, -1, -1, -1, -1, -1, -1};
+
+        show_winner.setText("O's Turn");
+
+        game_over = false;
+
+        counter = 0;
+
+        play_again = findViewById(R.id.play_again);
+        play_again.setVisibility(View.INVISIBLE);
+
     }
 
 }
